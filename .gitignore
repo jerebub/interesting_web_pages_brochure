@@ -1,3 +1,7 @@
+# stuff I simply do not want to push
+*.png
+*.pdf
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
