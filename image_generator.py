@@ -203,6 +203,19 @@ def create_title_card(background_path:str):
     background = Image.open(background_path).resize(card_size).rotate(90, expand=True)
     background.save(f'{card_folder}00title.png')
 
+def delete_temp_files():
+    """delete all temporary files
+    """
+    global screenshot_folder
+    global qrcode_folder
+    global card_folder
+    for file in os.listdir(screenshot_folder):
+        if '.png' in file: os.remove(f'{screenshot_folder}{file}')
+    for file in os.listdir(qrcode_folder):
+        if '.png' in file: os.remove(f'{qrcode_folder}{file}')
+    for file in os.listdir(card_folder):
+        if '.png' in file: os.remove(f'{card_folder}{file}')
+
 def main():
     """main function to generate screenshots, qr-codes and the final cards for the printservice
     """
@@ -239,6 +252,7 @@ def main():
         background.paste(img, mask=img.split()[3])
         cards.append(background)
     cards[0].save('cards.pdf', "PDF", resolution=100.0, save_all=True, append_images=cards[1:])
+    # delete_temp_files() # uncomment to delete the temporary files, keep it as is for faster run times in multiple consecutive runs
 
 if __name__ == '__main__':
     main()
