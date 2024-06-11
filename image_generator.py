@@ -15,6 +15,18 @@ card_folder = 'output\\'
 minor_font = "arial.ttf"
 major_font = "courbd.ttf"
 
+def init_folders():
+    """initialize the folders for the screenshots, qr-codes and the final cards
+    """
+    global screenshot_folder
+    global qrcode_folder
+    global card_folder
+    if not os.path.exists(screenshot_folder):
+        os.makedirs(screenshot_folder)
+    if not os.path.exists(qrcode_folder):
+        os.makedirs(qrcode_folder)
+    if not os.path.exists(card_folder):
+        os.makedirs(card_folder)
 
 def take_screenshot(pw:PlaywrightContextManager, url:str, filename:str,):
     """take a screenshot from a given url and save it as a png file with the given filename in the given folder
@@ -196,6 +208,8 @@ def main():
     """
     global screenshot_folder
     global qrcode_folder
+
+    init_folders()
     df = pd.read_csv('websites.csv')
     pd.set_option('display.max_colwidth', None)
     # create a playwrightcontextmanager
