@@ -45,7 +45,7 @@ Feel free to use the code for your own projects or just for fun. Let's all enjoy
 # next steps
 - add more websites to the collection
 - add a back page
-- add a legend page
+- ~~add a legend page~~
 - add the calendar function (day, month, year)
 - add notes about the holidays
 - add a icons representing the moon phases in central germany
