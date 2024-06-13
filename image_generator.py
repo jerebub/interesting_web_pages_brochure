@@ -1,5 +1,6 @@
 # import csv reader
 import math
+import sys
 import pandas as pd
 from playwright.sync_api import sync_playwright, PlaywrightContextManager
 import qrcode
@@ -32,7 +33,7 @@ def take_screenshot(pw:PlaywrightContextManager, url:str, filename:str,):
     """take a screenshot from a given url and save it as a png file with the given filename in the given folder
 
     Args:
-        pw (PlaywrightContextManager): a PlaywrightContextManager  
+        pw (PlaywrightContextManager): a PlaywrightContextManager
         url (str): the url of the website to take a screenshot from
         filename (str): the name the png file should have
     """
@@ -198,10 +199,10 @@ def create_title_card(background_path:str):
     """
     global card_size
     global card_folder
-    if os.path.exists(f'{card_folder}00title.png'):
+    if os.path.exists(f'{card_folder}00.png'):
         return
     background = Image.open(background_path).resize(card_size).rotate(90, expand=True)
-    background.save(f'{card_folder}00title.png')
+    background.save(f'{card_folder}00.png')
 
 def delete_temp_files():
     """delete all temporary files
@@ -215,6 +216,17 @@ def delete_temp_files():
         if '.png' in file: os.remove(f'{qrcode_folder}{file}')
     for file in os.listdir(card_folder):
         if '.png' in file: os.remove(f'{card_folder}{file}')
+
+def picture_sorter(pictures:list[str])->list[str]:
+    """sort a list of picture paths by the number in the filename and files with 'index_' in their name come last
+
+    Args:
+        pictures (list[str]): a list of picture paths
+
+    Returns:
+        list[str]: the sorted list of picture paths
+    """
+    return sorted(pictures, key=lambda x: (sys.maxsize-100+ int(x.split('.')[0].split('_')[-1]) if 'index_' in x else int(x.split('.')[0])))
 
 def main():
     """main function to generate screenshots, qr-codes and the final cards for the printservice
@@ -245,7 +257,7 @@ def main():
     create_title_card('assets\\Mangowiggles.png')
     # create pdf
     cards = []
-    for file in os.listdir(card_folder):
+    for file in picture_sorter(os.listdir(card_folder)):
         img = Image.open(f'{card_folder}{file}')
         img.load()
         background = Image.new('RGB', tuple(reversed(card_size)), (255, 255, 255))
