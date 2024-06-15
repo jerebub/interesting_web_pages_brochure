@@ -1,21 +1,21 @@
 # About
-This project is the result of a farewell-gift for my friend. It is a simple application that collects screenshots of websites I found entertaining or noteworthy and designs a calender-like layout for them. Sadly I could only find 150 websites that fit my criteria, so I don't have enough for an entire year. Nevertheless, I hope she'll enjoy the present and maybe I can add some more sites to the collection in the future.
+This project is the result of a farewell-gift for my friend. It is a simple application that collects screenshots of websites I found entertaining or noteworthy and designs a calender-like layout for them. Sadly I could only find about 150 websites that fit my criteria, so I don't have enough for an entire year. Nevertheless, I hope she'll enjoy the present and maybe I can add some more sites to the collection in the future.
 
-The code is written in python and uses the following libraries:
+The code is written in python 3.9.5 and uses the following libraries:
 - pandas , for csv-handling
 - pillow , to edit the images
 - aggdraw , to draw on the images
 - qrcode , to generate qr-codes
 - playwright , to take screenshots of websites
 
-The printservice used will be https://www.wir-machen-druck.de/broschuere-mit-metallspiralbindung-endformat-din-a6-quer-156seitig.html#nav-printdata. Due to the format of the final print, there are some restrictions to the size of the images. The final images will fit on an A6 page. For printing I needed to add some margins.
+The printservice used will be https://www.wir-machen-druck.de/broschuere-mit-metallspiralbindung-endformat-din-a6-quer-156seitig.html#nav-printdata. Due to the format of the final print, there are some restrictions to the size of the images. The final images will fit on an A6 page. For printing I needed to add some margins. Fell free to adapt them to your own needs in the code.
 
 # Structure
 The list of websites with their description is in the websites.csv file. The screenshots are in the tmp_screenshots folder. The screenshots are named after the website's index in the csv. All images are in the .png format.
 QR-Codes linking to the website are stored in the tmp_qr-codes folder.
 The final calender pages are in the output folder.
 The code to generate everything is in the image_generator.py file.
-Additional assets I used for the cover page and the index-pages are in the assets folder.
+Additional assets I used for the cover page and the index-pages are in the assets folder. But due to copyright not uploaded to github.
 
 # Learnings
 Here are some things I learned while working on this project:
@@ -40,6 +40,9 @@ then you can run the code with the following command:
 ```bash
 python image_generator.py
 ```
+
+If you want the code to delete the screenshots and qr-codes after the pdf is created, you can uncomment the call for delete_temp-files() at the end of the main function. I'am keeping the images, so that I don't have to take the screenshots again, if I want to print the calender again.
+
 Feel free to use the code for your own projects or just for fun. Let's all enjoy the wonderful sites of the world wide web.
 
 # next steps
