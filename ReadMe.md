@@ -41,7 +41,7 @@ then you can run the code with the following command:
 python image_generator.py
 ```
 
-If you want the code to delete the screenshots and qr-codes after the pdf is created, you can uncomment the call for delete_temp-files() at the end of the main function. I'am keeping the images, so that I don't have to take the screenshots again, if I want to print the calender again.
+If you want the code to delete the screenshots and qr-codes after the pdf is created, you can uncomment the call for delete_temp_files() at the end of the main function. I'am keeping the images, so that I don't have to take the screenshots again, if I want to print the calender again.
 
 Feel free to use the code for your own projects or just for fun. Let's all enjoy the wonderful sites of the world wide web.
 
