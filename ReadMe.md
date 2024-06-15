@@ -36,6 +36,8 @@ afterwards you can run the code with the following command:
 playwright install --with-deps firefox
 ```
 
+make sure the required fonts are installed on your system: arial.ttf and courbd.ttf
+
 then you can run the code with the following command:
 ```bash
 python image_generator.py
