@@ -10,6 +10,7 @@ import aggdraw
 
 # defining global variables
 card_size = (1311, 1819) # the size of the final card in pixels, required for the printservice
+amount_title_cards = 1 # the amount of title cards to create
 screenshot_folder = 'tmp_screenshots\\'
 qrcode_folder = 'tmp_qr-codes\\'
 card_folder = 'output\\'
@@ -191,7 +192,7 @@ def create_index_cards(df:pd.DataFrame, background_path:str):
     background = background.rotate(90, expand=True)
     background.save(f'{card_folder}index_{str(math.ceil(counter/26))}.png')
 
-def create_title_card(background_path:str):
+def create_title_card(background_path:str, amount:int=1):
     """create a title card with the given background image
 
     Args:
@@ -199,10 +200,13 @@ def create_title_card(background_path:str):
     """
     global card_size
     global card_folder
-    if os.path.exists(f'{card_folder}00.png'):
-        return
-    background = Image.open(background_path).resize(card_size).rotate(90, expand=True)
-    background.save(f'{card_folder}00.png')
+    while amount > 0:
+        amount-=1
+        if os.path.exists(f'{card_folder}title_{amount}.png'):
+            continue
+        else:
+            background = Image.open(background_path).resize(card_size).rotate(90, expand=True)
+            background.save(f'{card_folder}title_{amount}.png')
 
 def delete_temp_files():
     """delete all temporary files
@@ -226,13 +230,21 @@ def picture_sorter(pictures:list[str])->list[str]:
     Returns:
         list[str]: the sorted list of picture paths
     """
-    return sorted(pictures, key=lambda x: (sys.maxsize-100+ int(x.split('.')[0].split('_')[-1]) if 'index_' in x else int(x.split('.')[0])))
+    def sort_key(x:str):
+        if 'index_' in x:
+            return sys.maxsize-100+ int(x.split('.')[0].split('_')[-1])
+        elif 'title_' in x:
+            return -sys.maxsize-1 + int(x.split('.')[0].split('_')[-1])
+        else:
+            return int(x.split('.')[0])
+    return sorted(pictures, key=sort_key)
 
 def main():
     """main function to generate screenshots, qr-codes and the final cards for the printservice
     """
     global screenshot_folder
     global qrcode_folder
+    global amount_title_cards
 
     init_folders()
     df = pd.read_csv('websites.csv')
@@ -254,7 +266,7 @@ def main():
                     print(f'Error: {row["url"]} could not be loaded \n retry {retry+1} of 3')
                     continue
     create_index_cards(df,'assets\\Mangowiggles.png')
-    create_title_card('assets\\Mangowiggles.png')
+    create_title_card('assets\\Mangowiggles.png', amount_title_cards)
     # create pdf
     cards = []
     for file in picture_sorter(os.listdir(card_folder)):
