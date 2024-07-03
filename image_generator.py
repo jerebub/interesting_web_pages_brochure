@@ -231,6 +231,14 @@ def picture_sorter(pictures:list[str])->list[str]:
         list[str]: the sorted list of picture paths
     """
     def sort_key(x:str):
+        """sort key function for the sorted function
+
+        Args:
+            x (str): the filename
+
+        Returns:
+            int: for title_cards the minimal value plus the number in the filename, for index_cards the maximal value minus 100 plus the number in the filename, for all other cards the number in the filename
+        """
         if 'index_' in x:
             return sys.maxsize-100+ int(x.split('.')[0].split('_')[-1])
         elif 'title_' in x:
