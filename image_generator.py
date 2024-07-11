@@ -8,6 +8,7 @@ from PIL import Image, ImageFilter, ImageFont, ImageDraw
 import os.path
 import aggdraw
 
+
 # defining global variables
 card_size = (1311, 1819) # the size of the final card in pixels, required for the printservice
 amount_title_cards = 1 # the amount of title cards to create
@@ -247,6 +248,18 @@ def picture_sorter(pictures:list[str])->list[str]:
             return int(x.split('.')[0])
     return sorted(pictures, key=sort_key)
 
+def rotate_image(image:Image, angle:int=90)->Image:
+    """rotate an image by a given angle, defaults to 90 degrees
+
+    Args:
+        image (Image): the image to rotate
+        angle (int): the angle to rotate the image
+
+    Returns:
+        Image: the rotated image
+    """
+    return image.rotate(angle, expand=True)
+
 def main():
     """main function to generate screenshots, qr-codes and the final cards for the printservice
     """
@@ -283,7 +296,11 @@ def main():
         background = Image.new('RGB', tuple(reversed(card_size)), (255, 255, 255))
         background.paste(img, mask=img.split()[3])
         cards.append(background)
+    # rotate every second card by 180 degrees for the backside of the brochure-pages
+    # for i in range(1, len(cards), 2):
+    #     cards[i] = rotate_image(cards[i], 180)
     cards[0].save('cards.pdf', "PDF", resolution=100.0, save_all=True, append_images=cards[1:])
+    
     # delete_temp_files() # uncomment to delete the temporary files, keep it as is for faster run times in multiple consecutive runs
 
 if __name__ == '__main__':
