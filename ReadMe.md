@@ -24,7 +24,7 @@ Here are some things I learned while working on this project:
 - How to edit images with pillow
 - How to generate qr-codes with qrcode
 - How to create a pdf with multiple pages with pillow
-- Pandas shortens a colums with and truncates the text in it. that can be changed with pd.set_option('display.max_colwidth', None)
+- Pandas shortens a colums width and truncates the text in it. that can be changed with pd.set_option('display.max_colwidth', None)
 
 # Usage
 for the code to work you need to install the required libraries. You can do this by running the following command in the terminal:
